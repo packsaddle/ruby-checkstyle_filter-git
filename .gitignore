@@ -7,3 +7,6 @@
 /pkg/
 /spec/reports/
 /tmp/
+
+# Ignore bundler binstubs
+/bundle_bin
