@@ -1,4 +1,4 @@
-require "checkstyle_filter/git/version"
+require 'checkstyle_filter/git/version'
 
 module CheckstyleFilter
   module Git
