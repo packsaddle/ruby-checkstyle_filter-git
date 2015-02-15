@@ -26,8 +26,15 @@ module CheckstyleFilter
         require 'rexml/document'
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|
+          _file_name = file_element.attribute('name').value
           file_element.elements.each('error') do |error_element|
             if true # file_element error line_no is in git diff
+              _line = error_element.attribute('line') && error_element.attribute('line').value.to_i
+              _column = error_element.attribute('column') && error_element.attribute('column').value.to_i
+              _severity = error_element.attribute('severity') && error_element.attribute('severity').value
+              _message = error_element.attribute('message') && error_element.attribute('message').value
+              _source = error_element.attribute('source') && error_element.attribute('source').value
+              _invalid = error_element.attribute('invalid') && error_element.attribute('invalid').value # invalid param
               error_element.remove
             end
           end
