@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<checkstyle>
+  <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/checkstyle_filter-git.gemspec'/>
+  <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/example/invalid.rb'>
+    <error line='3' column='100' severity='info' message='Line is too long. [188/100]' source='com.puppycrawl.tools.checkstyle.Metrics/LineLength'/>
+  </file>
+  <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/exe/checkstyle_filter-git'/>
+  <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/lib/checkstyle_filter/git/cli.rb'/>
+</checkstyle>
