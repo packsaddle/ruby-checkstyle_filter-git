@@ -21,7 +21,19 @@ module CheckstyleFilter
           end
 
         abort if !data || data.empty?
-        puts data
+
+        # TODO: split to class
+        require 'rexml/document'
+        document = REXML::Document.new data
+        document.elements.each('/checkstyle/file') do |file_element|
+          file_element.elements.each('error') do |error_element|
+            if true # file_element error line_no is in git diff
+              error_element.remove
+            end
+          end
+        end
+
+        puts document.to_s
       end
 
       desc 'version', 'Show the CheckstyleFilter/Git version'
