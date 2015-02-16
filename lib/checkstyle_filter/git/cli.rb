@@ -3,8 +3,6 @@ require 'thor'
 module CheckstyleFilter
   module Git
     class CLI < Thor
-      require 'checkstyle_filter/git'
-
       def self.exit_on_failure?
         true
       end

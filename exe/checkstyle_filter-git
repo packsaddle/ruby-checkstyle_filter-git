@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'checkstyle_filter/git'
 require 'checkstyle_filter/git/cli'
 
 CheckstyleFilter::Git::CLI.start(ARGV)
