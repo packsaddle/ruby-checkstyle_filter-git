@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'bundle_bin/*'
+    - 'vendor/bundle/**/*'
 
 Style/Documentation:
   Enabled: false
