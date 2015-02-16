@@ -23,6 +23,12 @@ module CheckstyleFilter
 
         abort if !data || data.empty?
 
+        # TODO: implement
+        git_diff = `git diff --no-color b5ee3a61...origin/master`
+        parsed = ::CheckstyleFilter::Git::DiffParser.parse(git_diff)
+
+        # TODO: implement
+
         # TODO: split to class
         require 'rexml/document'
         document = REXML::Document.new data
