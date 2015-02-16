@@ -9,10 +9,13 @@ module CheckstyleFilter
 
       desc 'diff', 'Filter using `git diff`'
       option :data
+      option :file
       def diff(_commit_ish = 'origin/master')
         data = \
           if options[:data]
             options[:data]
+          elsif options[:file]
+            File.read(options[:file])
           elsif !$stdin.tty?
             ARGV.clear
             ARGF.read
