@@ -10,7 +10,7 @@ module CheckstyleFilter
       desc 'diff', 'Filter using `git diff`'
       option :data
       option :file
-      def diff(_commit_ish = 'origin/master')
+      def diff(_commit_ish = nil)
         data = \
           if options[:data]
             options[:data]
