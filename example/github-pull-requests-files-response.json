@@ -1,0 +1,26 @@
+[
+  {
+    "sha": "80adf33bacc9f387b6ac2e099945326b3e699fda",
+    "filename": "lib/tachikoma/settings.rb",
+    "status": "modified",
+    "additions": 23,
+    "deletions": 2,
+    "changes": 25,
+    "blob_url": "https://github.com/sanemat/tachikoma/blob/216e050fac8cb7133b8b19a1c0292f48e5994645/lib/tachikoma/settings.rb",
+    "raw_url": "https://github.com/sanemat/tachikoma/raw/216e050fac8cb7133b8b19a1c0292f48e5994645/lib/tachikoma/settings.rb",
+    "contents_url": "https://api.github.com/repos/sanemat/tachikoma/contents/lib/tachikoma/settings.rb?ref=216e050fac8cb7133b8b19a1c0292f48e5994645",
+    "patch": "@@ -1,6 +1,27 @@\n require 'pathname'\n+\n module Tachikoma\n-  def self.root\n-    Pathname.new(File.dirname(File.dirname(File.dirname(__FILE__))))\n+  def self.root_path\n+    @root_path ||= Pathname.new(File.dirname(File.dirname(File.dirname(__FILE__))))\n+  end\n+\n+  def self.root_path=(root_path)\n+    @root_path = Pathname.new File.expand_path(root_path)\n+  end\n+\n+  def self.data_path\n+    @data_path ||= root_path.parent.join('data')\n+  end\n+\n+  def self.data_path=(data_path)\n+    @data_path = Pathname.new File.expand_path(data_path)\n+  end\n+\n+  def self.repos_path\n+    @repos_path ||= root_path.parent.join('repos')\n+  end\n+\n+  def self.repos_path=(repos_path)\n+    @repos_path = Pathname.new File.expand_path(repos_path)\n   end\n end"
+  },
+  {
+    "sha": "d71ff33adad9125f0939681435e2ad3531ca26cb",
+    "filename": "lib/tasks/app.rake",
+    "status": "modified",
+    "additions": 9,
+    "deletions": 11,
+    "changes": 20,
+    "blob_url": "https://github.com/sanemat/tachikoma/blob/216e050fac8cb7133b8b19a1c0292f48e5994645/lib/tasks/app.rake",
+    "raw_url": "https://github.com/sanemat/tachikoma/raw/216e050fac8cb7133b8b19a1c0292f48e5994645/lib/tasks/app.rake",
+    "contents_url": "https://api.github.com/repos/sanemat/tachikoma/contents/lib/tasks/app.rake?ref=216e050fac8cb7133b8b19a1c0292f48e5994645",
+    "patch": "@@ -2,12 +2,10 @@ require 'httparty'\n require 'multi_json'\n require 'safe_yaml'\n require 'uri'\n+require 'tachikoma'\n \n namespace :tachikoma do\n   @default_timestamp_format = '%Y%m%d%H%M%S'\n-  @root_path = File.expand_path(File.join(__FILE__, '..', '..', '..'))\n-  @data_path = File.join(@root_path, 'data')\n-  @repos_path = File.join(@root_path, 'repos')\n \n   # build_for = fenix-knight, github_token_key = TOKEN_FENIX_KNIGHT\n   def github_token_key(build_for)\n@@ -50,9 +48,9 @@ namespace :tachikoma do\n     if ENV['LOCAL_DATA_PATH'] && ENV['LOCAL_DATA_REMOTE_URL']\n       raise \"local data path is empty\"                     if ENV['LOCAL_DATA_PATH'] == ''\n       raise \"remote git repository of local data is empty\" if ENV['LOCAL_DATA_REMOTE_URL'] == ''\n-      @data_path = File.absolute_path(ENV['LOCAL_DATA_PATH'])\n-      rm_rf(@data_path) if Dir.exists?(@data_path)\n-      sh \"git clone #{ENV['LOCAL_DATA_REMOTE_URL']} #{@data_path}\"\n+      Tachikoma.data_path = File.absolute_path(ENV['LOCAL_DATA_PATH'])\n+      rm_rf(Tachikoma.data_path) if Dir.exists?(Tachikoma.data_path)\n+      sh \"git clone #{ENV['LOCAL_DATA_REMOTE_URL']} #{Tachikoma.data_path}\"\n       raise \"failed to clone remote repo: perhaps wrong git clone URL? #{ENV['LOCAL_DATA_REMOTE_URL']}\" unless $?.success?\n     else\n       warn \"`fetch_data` task requires LOCAL_DATA_PATH and LOCAL_DATA_REMOTE_URL environment variables\"\n@@ -65,7 +63,7 @@ namespace :tachikoma do\n     @git_name = 'bot-motoko'\n     @git_email = 'bot-motoko@al.sane.jp'\n     @configure =\n-      YAML.load_file(File.join(@data_path, \"#{@build_for}.yaml\"))\n+      YAML.load_file(File.join(Tachikoma.data_path, \"#{@build_for}.yaml\"))\n     @fetch_url = @configure['url']\n     @base_remote_branch = 'origin/master'\n     @authorized_url = authorized_url_with_type(@fetch_url, @configure['type'], @github_token, @git_name)\n@@ -90,18 +88,18 @@ namespace :tachikoma do\n   end\n \n   task :clean do\n-    rm_rf(Dir.glob('repos/*'))\n+    rm_rf(Dir.glob(Tachikoma.repos_path.to_s))\n   end\n \n   desc 'fetch'\n   task fetch: :clean do\n-    mkdir_p('repos')\n-    sh \"git clone #{@fetch_url} repos/#{@build_for}\"\n+    mkdir_p(Tachikoma.repos_path.to_s)\n+    sh \"git clone #{@fetch_url} #{Tachikoma.repos_path.to_s}/#{@build_for}\"\n   end\n \n   desc 'bundle'\n   task :bundle do\n-    Dir.chdir(\"repos/#{@build_for}\") do\n+    Dir.chdir(\"#{Tachikoma.repos_path.to_s}/#{@build_for}\") do\n       Bundler.with_clean_env do\n         sh %Q!sed -i -e 's/^ruby/#ruby/' Gemfile!\n         sh \"git config user.name #{@git_name}\""
+  }
+]
