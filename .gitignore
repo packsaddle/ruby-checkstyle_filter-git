@@ -10,3 +10,6 @@
 
 # Ignore bundler binstubs
 /bundle_bin
+
+# Ignore bundled files
+/vendor/bundle/*
