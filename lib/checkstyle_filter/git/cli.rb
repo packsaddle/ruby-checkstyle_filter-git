@@ -35,13 +35,8 @@ module CheckstyleFilter
           file_name = file_element.attribute('name').value
           next unless file_element_file_in_git_diff?(file_name, parsed)
           file_element.elements.each('error') do |error_element|
-            if true # file_element_error_line_no is in git diff
-              _line = error_element.attribute('line') && error_element.attribute('line').value.to_i
-              _column = error_element.attribute('column') && error_element.attribute('column').value.to_i
-              _severity = error_element.attribute('severity') && error_element.attribute('severity').value
-              _message = error_element.attribute('message') && error_element.attribute('message').value
-              _source = error_element.attribute('source') && error_element.attribute('source').value
-              _invalid = error_element.attribute('invalid') && error_element.attribute('invalid').value # invalid param
+            line = error_element.attribute('line') && error_element.attribute('line').value.to_i
+            if file_element_error_line_no_in_modified?(file_name, parsed, line)
               error_element.remove
             end
           end
@@ -64,6 +59,20 @@ module CheckstyleFilter
           diff_files
             .map { |file| Pathname.new(file).expand_path }
             .include?(Pathname.new(file_name).expand_path)
+        end
+
+        def file_element_error_line_no_in_modified?(file_name, parsed_git_diff, line)
+          require 'pathname'
+          diff_pairs = parsed_git_diff
+                       .select { |diff| Pathname.new(diff[:file_name]).expand_path == Pathname.new(file_name).expand_path }
+          return false if diff_pairs.empty?
+          modified_lines = Set.new
+          diff_pairs.map do |diff_pair|
+            diff_pair[:patch].changed_lines.map do |line|
+              modified_lines << line.number
+            end
+          end
+          modified_lines.include?(line)
         end
       end
     end
