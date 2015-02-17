@@ -22,7 +22,7 @@ module CheckstyleFilter
           when %r{^\+\+\+ b/(?<file_name>.*)}
             file_name = Regexp.last_match[:file_name]
             body = true
-          when %r{^(?<body>[\ @\+\-\\].*)}
+          when /^(?<body>[\ @\+\-\\].*)/
             patch << Regexp.last_match[:body] if body
             if !patch.empty? && body && line_count == count + 1
               parsed << { file_name: file_name,

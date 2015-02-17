@@ -61,10 +61,12 @@ module CheckstyleFilter
             .include?(Pathname.new(file_name).expand_path)
         end
 
-        def file_element_error_line_no_in_modified?(file_name, parsed_git_diff, line)
+        def file_element_error_line_no_in_modified?(file_name, parsed_git_diff, line_no)
           require 'pathname'
           diff_pairs = parsed_git_diff
-                       .select { |diff| Pathname.new(diff[:file_name]).expand_path == Pathname.new(file_name).expand_path }
+                       .select do |diff|
+            Pathname.new(diff[:file_name]).expand_path == Pathname.new(file_name).expand_path
+          end
           return false if diff_pairs.empty?
           modified_lines = Set.new
           diff_pairs.map do |diff_pair|
@@ -72,7 +74,7 @@ module CheckstyleFilter
               modified_lines << line.number
             end
           end
-          modified_lines.include?(line)
+          modified_lines.include?(line_no)
         end
       end
     end
