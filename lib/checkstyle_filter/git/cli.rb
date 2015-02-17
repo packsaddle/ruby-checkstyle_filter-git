@@ -59,7 +59,11 @@ module CheckstyleFilter
 
       no_commands do
         def file_element_file_in_git_diff?(file_name, parsed_git_diff)
-          true
+          require 'pathname'
+          diff_files = parsed_git_diff.map{|one| one[:file_name]}
+          diff_files
+            .map{|file| Pathname.new(file).expand_path}
+            .include?(Pathname.new(file_name).expand_path)
         end
       end
     end
