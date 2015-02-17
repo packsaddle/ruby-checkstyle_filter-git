@@ -33,8 +33,8 @@ module CheckstyleFilter
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|
           file_name = file_element.attribute('name').value
+          next unless file_element_file_in_git_diff?(file_name, parsed)
           file_element.elements.each('error') do |error_element|
-            next unless file_element_file_in_git_diff?(file_name, parsed)
             if true # file_element_error_line_no is in git diff
               _line = error_element.attribute('line') && error_element.attribute('line').value.to_i
               _column = error_element.attribute('column') && error_element.attribute('column').value.to_i
