@@ -28,15 +28,14 @@ module CheckstyleFilter
         git_diff, _, _ = Open3.capture3(*command)
         parsed = ::CheckstyleFilter::Git::DiffParser.parse(git_diff)
 
-        # TODO: implement
-
         # TODO: split to class
         require 'rexml/document'
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|
-          _file_name = file_element.attribute('name').value
+          file_name = file_element.attribute('name').value
           file_element.elements.each('error') do |error_element|
-            if true # file_element error line_no is in git diff
+            next unless file_element_file_in_git_diff?(file_name, parsed)
+            if true # file_element_error_line_no is in git diff
               _line = error_element.attribute('line') && error_element.attribute('line').value.to_i
               _column = error_element.attribute('column') && error_element.attribute('column').value.to_i
               _severity = error_element.attribute('severity') && error_element.attribute('severity').value
@@ -56,6 +55,12 @@ module CheckstyleFilter
 
       def version
         puts "CheckstyleFilter/Git version #{::CheckstyleFilter::Git::VERSION}"
+      end
+
+      no_commands do
+        def file_element_file_in_git_diff?(file_name, parsed_git_diff)
+          true
+        end
       end
     end
   end
