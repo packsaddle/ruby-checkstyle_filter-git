@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['o.gata.ken@gmail.com']
 
   spec.summary       = 'Filter checkstyle format errors on ONLY modified lines.'
-  spec.description   = 'Filter by git diff.'
+  spec.description   = 'Filter errors(checkstyle) by git diff.'
   spec.homepage      = 'https://github.com/packsaddle/ruby-checkstyle_filter-git'
   spec.license       = 'MIT'
 
