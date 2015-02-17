@@ -1,4 +1,5 @@
 require 'thor'
+require 'open3'
 
 module CheckstyleFilter
   module Git
@@ -10,7 +11,7 @@ module CheckstyleFilter
       desc 'diff', 'Filter using `git diff`'
       option :data
       option :file
-      def diff(_commit_ish = nil)
+      def diff(commit_ish = nil)
         data = \
           if options[:data]
             options[:data]
@@ -23,8 +24,8 @@ module CheckstyleFilter
 
         abort if !data || data.empty?
 
-        # TODO: implement
-        git_diff = `git diff --no-color b5ee3a61...origin/master`
+        command = ['git', 'diff', '--no-color', commit_ish].compact
+        git_diff, _, _ = Open3.capture3(*command)
         parsed = ::CheckstyleFilter::Git::DiffParser.parse(git_diff)
 
         # TODO: implement
