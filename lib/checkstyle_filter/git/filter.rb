@@ -25,16 +25,13 @@ module CheckstyleFilter
       def self.file_element_file_in_git_diff?(file_name, patches)
         patches
           .map(&:file)
-          .map{ |file| Pathname.new(file).expand_path }
+          .map { |file| Pathname.new(file).expand_path }
           .include?(Pathname.new(file_name).expand_path)
       end
 
       def self.file_element_error_line_no_in_modified?(file_name, patches, line_no)
         diff_patches = patches
-                       .select do |patch|
-          Pathname.new(patch.file).expand_path \
-              == Pathname.new(file_name).expand_path
-        end
+                       .select { |patch| same_file?(patch.file, file_name) }
         return false if diff_patches.empty?
 
         modified_lines = Set.new
@@ -45,6 +42,10 @@ module CheckstyleFilter
         end
 
         modified_lines.include?(line_no)
+      end
+
+      def self.same_file?(one, other)
+        Pathname.new(one).expand_path == Pathname.new(other).expand_path
       end
     end
   end
