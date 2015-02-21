@@ -26,7 +26,7 @@ module CheckstyleFilter
 
         command = ['git', 'diff', '--no-color', commit_ish].compact
         git_diff, _, _ = Open3.capture3(*command)
-        parsed = ::CheckstyleFilter::Git::DiffParser.parse(git_diff)
+        parsed = ::Git::Diff::Parser.parse(git_diff)
 
         # TODO: split to class
         require 'rexml/document'
@@ -53,27 +53,30 @@ module CheckstyleFilter
       end
 
       no_commands do
-        def file_element_file_in_git_diff?(file_name, parsed_git_diff)
+        def file_element_file_in_git_diff?(file_name, patches)
           require 'pathname'
-          diff_files = parsed_git_diff.map { |one| one[:file_name] }
+          diff_files = patches.map(&:file)
           diff_files
             .map { |file| Pathname.new(file).expand_path }
             .include?(Pathname.new(file_name).expand_path)
         end
 
-        def file_element_error_line_no_in_modified?(file_name, parsed_git_diff, line_no)
+        def file_element_error_line_no_in_modified?(file_name, patches, line_no)
           require 'pathname'
-          diff_pairs = parsed_git_diff
-                       .select do |diff|
-            Pathname.new(diff[:file_name]).expand_path == Pathname.new(file_name).expand_path
+          diff_patches = patches
+                         .select do |patch|
+            Pathname.new(patch.file).expand_path \
+              == Pathname.new(file_name).expand_path
           end
-          return false if diff_pairs.empty?
+          return false if diff_patches.empty?
+
           modified_lines = Set.new
-          diff_pairs.map do |diff_pair|
-            diff_pair[:patch].changed_lines.map do |line|
+          diff_patches.map do |patch|
+            patch.changed_lines.map do |line|
               modified_lines << line.number
             end
           end
+
           modified_lines.include?(line_no)
         end
       end
