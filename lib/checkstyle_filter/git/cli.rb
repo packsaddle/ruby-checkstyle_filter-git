@@ -61,19 +61,22 @@ module CheckstyleFilter
             .include?(Pathname.new(file_name).expand_path)
         end
 
-        def file_element_error_line_no_in_modified?(file_name, parsed_git_diff, line_no)
+        def file_element_error_line_no_in_modified?(file_name, patches, line_no)
           require 'pathname'
-          diff_pairs = parsed_git_diff
-                       .select do |diff|
-            Pathname.new(diff[:file_name]).expand_path == Pathname.new(file_name).expand_path
+          diff_patches = patches
+                           .select do |patch|
+            Pathname.new(patch.file).expand_path \
+              == Pathname.new(file_name).expand_path
           end
-          return false if diff_pairs.empty?
+          return false if diff_patches.empty?
+
           modified_lines = Set.new
-          diff_pairs.map do |diff_pair|
-            diff_pair[:patch].changed_lines.map do |line|
+          diff_patches.map do |patch|
+            patch.changed_lines.map do |line|
               modified_lines << line.number
             end
           end
+
           modified_lines.include?(line_no)
         end
       end
