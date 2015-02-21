@@ -12,14 +12,14 @@ module CheckstyleFilter
           file_name = file_element.attribute('name') && file_element.attribute('name').value
           if file_in_patches?(file_name, patches)
             file_element.elements.each('error') do |error_element|
-              error_element.remove
-            end
-          else
-            file_element.elements.each('error') do |error_element|
               line = error_element.attribute('line') && error_element.attribute('line').value.to_i
               unless file_element_error_line_no_in_patches?(file_name, patches, line)
                 error_element.remove
               end
+            end
+          else
+            file_element.elements.each('error') do |error_element|
+              error_element.remove
             end
           end
         end
