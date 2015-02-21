@@ -1,9 +1,9 @@
 <?xml version='1.0'?>
 <checkstyle>
-  <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/example/invalid.rb'>
+  <file name='example/invalid.rb'>
     <error line='3' column='100' severity='info' message='Line is too long. [187/100]' source='com.puppycrawl.tools.checkstyle.Metrics/LineLength'/>
   </file>
-  <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/lib/checkstyle_filter/git/cli.rb'>
+  <file name='lib/checkstyle_filter/git/cli.rb'>
     <error line='14' column='6' severity='info' message='Assignment Branch Condition size for diff is too high. [38.21/15]' source='com.puppycrawl.tools.checkstyle.Metrics/AbcSize'/>
     <error line='14' column='6' severity='info' message='Cyclomatic complexity for diff is too high. [9/6]' source='com.puppycrawl.tools.checkstyle.Metrics/CyclomaticComplexity'/>
     <error line='14' column='6' severity='info' message='Method has too many lines. [26/10]' source='com.puppycrawl.tools.checkstyle.Metrics/MethodLength'/>
