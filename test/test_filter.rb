@@ -34,6 +34,25 @@ module CheckstyleFilter
           end
         end
       end
+
+      sub_test_case '.file_element_error_line_no_in_patches?' do
+        diff = File.read('./test/support/fixtures/git_diff_test.txt')
+        patches = ::Git::Diff::Parser.parse(diff)
+        test 'included' do
+          file = 'example/invalid.rb'
+          line_no = 3 # error and diff included
+          assert do
+            Filter.file_element_error_line_no_in_patches?(file, patches, line_no)
+          end
+        end
+        test 'not included' do
+          file = 'lib/checkstyle_filter/git/cli.rb'
+          line_no = 65 # error but not diff included
+          assert do
+            !Filter.file_element_error_line_no_in_patches?(file, patches, line_no)
+          end
+        end
+      end
     end
   end
 end
