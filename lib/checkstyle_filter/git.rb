@@ -1,8 +1,8 @@
-require 'checkstyle_filter/git/version'
 require 'git/diff/parser'
+require 'checkstyle_filter/git/version'
+require 'checkstyle_filter/git/filter'
 
 module CheckstyleFilter
   module Git
-    # Your code goes here...
   end
 end

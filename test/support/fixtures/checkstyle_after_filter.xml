@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<checkstyle>
+  <file name='example/invalid.rb'>
+    <error column='100' line='3' message='Line is too long. [187/100]' severity='info' source='com.puppycrawl.tools.checkstyle.Metrics/LineLength'/>
+  </file>
+  <file name='lib/checkstyle_filter/git/cli.rb'>
+    
+    
+    
+    
+    
+    
+  </file>
+</checkstyle>
