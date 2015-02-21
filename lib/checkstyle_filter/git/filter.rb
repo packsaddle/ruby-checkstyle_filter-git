@@ -23,9 +23,9 @@ module CheckstyleFilter
       end
 
       def self.file_element_file_in_git_diff?(file_name, patches)
-        diff_files = patches.map(&:file)
-        diff_files
-          .map { |file| Pathname.new(file).expand_path }
+        patches
+          .map(&:file)
+          .map{ |file| Pathname.new(file).expand_path }
           .include?(Pathname.new(file_name).expand_path)
       end
 
