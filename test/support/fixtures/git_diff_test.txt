@@ -1,0 +1,23 @@
+diff --git a/example/invalid.rb b/example/invalid.rb
+index b13da3a..bd410d9 100644
+--- a/example/invalid.rb
++++ b/example/invalid.rb
+@@ -1,5 +1,5 @@
+ class Invalid
+   def foo
+-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
++    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+   end
+ end
+diff --git a/lib/checkstyle_filter/git/cli.rb b/lib/checkstyle_filter/git/cli.rb
+index 2f56161..d70b725 100644
+--- a/lib/checkstyle_filter/git/cli.rb
++++ b/lib/checkstyle_filter/git/cli.rb
+@@ -49,6 +49,7 @@ def diff(commit_ish = nil)
+       map %w(-v --version) => :version
+ 
+       def version
++        # add comment
+         puts "CheckstyleFilter/Git version #{::CheckstyleFilter::Git::VERSION}"
+       end
+ 
