@@ -1,4 +1,4 @@
-require 'minitest_helper'
+require './test/minitest_helper'
 
 module CheckstyleFilter
   class TestGit < Minitest::Test
