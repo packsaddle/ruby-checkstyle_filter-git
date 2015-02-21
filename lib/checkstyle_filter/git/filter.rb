@@ -9,12 +9,17 @@ module CheckstyleFilter
 
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|
-          file_name = file_element.attribute('name').value
-          next unless file_element_file_in_git_diff?(file_name, patches)
-          file_element.elements.each('error') do |error_element|
-            line = error_element.attribute('line') && error_element.attribute('line').value.to_i
-            if file_element_error_line_no_in_modified?(file_name, patches, line)
+          file_name = file_element.attribute('name') && file_element.attribute('name').value
+          if file_element_file_in_git_diff?(file_name, patches)
+            file_element.elements.each('error') do |error_element|
               error_element.remove
+            end
+          else
+            file_element.elements.each('error') do |error_element|
+              line = error_element.attribute('line') && error_element.attribute('line').value.to_i
+              unless file_element_error_line_no_in_modified?(file_name, patches, line)
+                error_element.remove
+              end
             end
           end
         end
