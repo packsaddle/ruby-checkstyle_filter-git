@@ -24,13 +24,13 @@ module CheckstyleFilter
         test 'included' do
           file = 'path/to/this_one'
           assert do
-            Filter.file_element_file_in_git_diff?(file, patches)
+            Filter.file_in_patches?(file, patches)
           end
         end
         test 'not included' do
           file = 'not_included'
           assert do
-            !Filter.file_element_file_in_git_diff?(file, patches)
+            !Filter.file_in_patches?(file, patches)
           end
         end
       end

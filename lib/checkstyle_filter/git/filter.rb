@@ -10,7 +10,7 @@ module CheckstyleFilter
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|
           file_name = file_element.attribute('name') && file_element.attribute('name').value
-          if file_element_file_in_git_diff?(file_name, patches)
+          if file_in_patches?(file_name, patches)
             file_element.elements.each('error') do |error_element|
               error_element.remove
             end
@@ -27,7 +27,7 @@ module CheckstyleFilter
         document.to_s
       end
 
-      def self.file_element_file_in_git_diff?(file_name, patches)
+      def self.file_in_patches?(file_name, patches)
         patches
           .map(&:file)
           .map { |file| Pathname.new(file).expand_path }
