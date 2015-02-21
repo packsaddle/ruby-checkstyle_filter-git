@@ -53,6 +53,18 @@ module CheckstyleFilter
           end
         end
       end
+
+      sub_test_case '.filter' do
+        diff = File.read('./test/support/fixtures/git_diff_test.txt')
+        before_filter = File.read('./test/support/fixtures/checkstyle_before_filter.xml')
+        after_filter = File.read('./test/support/fixtures/checkstyle_after_filter.xml')
+        test 'filtered' do
+          assert do
+            # FIXME: compare xml node with rexml
+            Filter.filter(before_filter, diff).chomp == after_filter.chomp
+          end
+        end
+      end
     end
   end
 end
