@@ -98,7 +98,7 @@ git diff -z --name-only origin/master.. \
      --require rubocop/formatter/checkstyle_formatter \
      --format RuboCop::Formatter::CheckstyleFormatter \
  | checkstyle_filter-git diff origin/master.. \
- | saddler run \
+ | saddler report \
      --require github/pull-request-comment-formatter \
      --format Github::PullRequestCommentFormatter
 ```
