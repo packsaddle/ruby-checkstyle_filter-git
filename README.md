@@ -119,6 +119,26 @@ Or install it yourself as:
 
     $ gem install checkstyle_filter-git
 
+## Help
+
+```
+$ checkstyle_filter-git
+Commands:
+  checkstyle_filter-git diff            # Filter using `git diff`
+  checkstyle_filter-git help [COMMAND]  # Describe available commands or one specific command
+  checkstyle_filter-git version         # Show the CheckstyleFilter/Git version
+
+$ checkstyle_filter-git help diff
+Usage:
+  checkstyle_filter-git diff
+
+Options:
+  [--data=DATA]
+  [--file=FILE]
+
+Filter using `git diff`
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment. Run `bundle exec checkstyle_filter-git` to use the code located in this directory, ignoring other installed copies of this gem.
