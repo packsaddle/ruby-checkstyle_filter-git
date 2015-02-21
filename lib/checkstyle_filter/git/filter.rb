@@ -17,7 +17,7 @@ module CheckstyleFilter
           else
             file_element.elements.each('error') do |error_element|
               line = error_element.attribute('line') && error_element.attribute('line').value.to_i
-              unless file_element_error_line_no_in_modified?(file_name, patches, line)
+              unless file_element_error_line_no_in_patches?(file_name, patches, line)
                 error_element.remove
               end
             end
@@ -34,7 +34,7 @@ module CheckstyleFilter
           .include?(Pathname.new(file_name).expand_path)
       end
 
-      def self.file_element_error_line_no_in_modified?(file_name, patches, line_no)
+      def self.file_element_error_line_no_in_patches?(file_name, patches, line_no)
         diff_patches = patches
                        .select { |patch| same_file?(patch.file, file_name) }
         return false if diff_patches.empty?
