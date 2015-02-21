@@ -60,10 +60,15 @@ module CheckstyleFilter
         after_filter = File.read('./test/support/fixtures/checkstyle_after_filter.xml')
         test 'filtered' do
           assert do
-            # FIXME: compare xml node with rexml
-            Filter.filter(before_filter, diff).chomp == after_filter.chomp
+            parse(Filter.filter(before_filter, diff)) == parse(after_filter)
           end
         end
+      end
+
+      def parse(xml)
+        ::Nori
+          .new(parser: :rexml)
+          .parse(xml)
       end
     end
   end
