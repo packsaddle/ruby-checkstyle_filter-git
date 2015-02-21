@@ -64,7 +64,7 @@ module CheckstyleFilter
         def file_element_error_line_no_in_modified?(file_name, patches, line_no)
           require 'pathname'
           diff_patches = patches
-                           .select do |patch|
+                         .select do |patch|
             Pathname.new(patch.file).expand_path \
               == Pathname.new(file_name).expand_path
           end
