@@ -5,7 +5,7 @@ module CheckstyleFilter
   module Git
     class Filter
       def self.filter(data, git_diff)
-        patches = ::Git::Diff::Parser.parse(git_diff)
+        patches = ::GitDiffParser.parse(git_diff)
 
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|

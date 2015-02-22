@@ -17,9 +17,9 @@ module CheckstyleFilter
       end
 
       sub_test_case '.file_element_file_in_git_diff?' do
-        patches = ::Git::Diff::Parser::Patches[
-          ::Git::Diff::Parser::Patch.new('', file: 'path/to/this_one'),
-          ::Git::Diff::Parser::Patch.new('', file: 'dammy_one')
+        patches = ::GitDiffParser::Patches[
+          ::GitDiffParser::Patch.new('', file: 'path/to/this_one'),
+          ::GitDiffParser::Patch.new('', file: 'dammy_one')
         ]
         test 'included' do
           file = 'path/to/this_one'
@@ -37,7 +37,7 @@ module CheckstyleFilter
 
       sub_test_case '.file_element_error_line_no_in_patches?' do
         diff = File.read('./test/support/fixtures/git_diff_test.txt')
-        patches = ::Git::Diff::Parser.parse(diff)
+        patches = ::GitDiffParser.parse(diff)
         test 'included' do
           file = 'example/invalid.rb'
           line_no = 3 # error and diff included
