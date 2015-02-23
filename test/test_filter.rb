@@ -14,6 +14,24 @@ module CheckstyleFilter
         end
       end
 
+      sub_test_case '.file_relative_path' do
+        test 'absolute' do
+          path = "#{Dir.pwd}/foo"
+          expected = 'foo'
+          assert do
+            Filter.file_relative_path(path) == expected
+          end
+        end
+
+        test 'relative' do
+          path = './bar'
+          expected = 'bar'
+          assert do
+            Filter.file_relative_path(path) == expected
+          end
+        end
+      end
+
       def parse(xml)
         ::Nori
           .new(parser: :rexml)
