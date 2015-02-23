@@ -10,7 +10,7 @@ module CheckstyleFilter
         document = REXML::Document.new data
         document.elements.each('/checkstyle/file') do |file_element|
           file_name = file_element.attribute('name') && file_element.attribute('name').value
-          file = file_relative_path(file_name)
+          file = file_relative_path_string(file_name)
           patch = patches.find_patch_by_file(file)
           if patch
             file_element.elements.each('error') do |error_element|
@@ -29,7 +29,7 @@ module CheckstyleFilter
         document.to_s
       end
 
-      def self.file_relative_path(file_name)
+      def self.file_relative_path_string(file_name)
         if Pathname.new(file_name).absolute?
           Pathname.new(file_name).relative_path_from(Pathname.new(Dir.pwd)).to_s
         else

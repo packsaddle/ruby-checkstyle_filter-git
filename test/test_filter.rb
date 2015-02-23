@@ -14,12 +14,12 @@ module CheckstyleFilter
         end
       end
 
-      sub_test_case '.file_relative_path' do
+      sub_test_case '.file_relative_path_string' do
         test 'absolute' do
           path = "#{Dir.pwd}/foo"
           expected = 'foo'
           assert do
-            Filter.file_relative_path(path) == expected
+            Filter.file_relative_path_string(path) == expected
           end
         end
 
@@ -27,7 +27,7 @@ module CheckstyleFilter
           path = './bar'
           expected = 'bar'
           assert do
-            Filter.file_relative_path(path) == expected
+            Filter.file_relative_path_string(path) == expected
           end
         end
       end
