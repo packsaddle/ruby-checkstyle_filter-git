@@ -14,3 +14,7 @@ notifications:
 branches:
   only:
     - master
+addons:
+  apt:
+    packages:
+      - libgmp-dev # workaround for travis-rubies 2.1.10
