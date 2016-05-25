@@ -20,7 +20,8 @@
   <file name='/Users/sane/work/ruby-study/checkstyle_filter-git/lib/checkstyle_filter/git/cli.rb'>
     <error line='14' column='6' severity='info' message='Assignment Branch Condition size for diff is too high. [54.73/15]' source='com.puppycrawl.tools.checkstyle.Metrics/AbcSize'/>
   </file>
-<checkstyle>
+</checkstyle>
+
 ```
 
 2. git diff
