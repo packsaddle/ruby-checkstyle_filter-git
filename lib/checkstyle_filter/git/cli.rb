@@ -29,6 +29,19 @@ module CheckstyleFilter
         puts ::CheckstyleFilter::Git::Filter.filter(data, git_diff)
       end
 
+      desc 'exec', 'Exec command `"git diff --no-color origin/master | iconv -f EUCJP -t UTF8"`'
+      def exec(command)
+        data = if !$stdin.tty?
+                 ARGV.clear
+                 ARGF.read
+               end
+
+        abort if !data || data.empty?
+
+        git_diff, _, _ = Open3.capture3(command)
+        puts ::CheckstyleFilter::Git::Filter.filter(data, git_diff)
+      end
+
       desc 'version', 'Show the CheckstyleFilter/Git version'
       map %w(-v --version) => :version
 
