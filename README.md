@@ -126,6 +126,7 @@ Or install it yourself as:
 $ checkstyle_filter-git
 Commands:
   checkstyle_filter-git diff            # Filter using `git diff`
+  checkstyle_filter-git exec            # Exec command `"git diff --no-color origin/master | iconv -f EUCJP -t UTF8"`
   checkstyle_filter-git help [COMMAND]  # Describe available commands or one specific command
   checkstyle_filter-git version         # Show the CheckstyleFilter/Git version
 
@@ -138,6 +139,12 @@ Options:
   [--file=FILE]
 
 Filter using `git diff`
+
+$ checkstyle_filter-git help exec
+Usage:
+  checkstyle_filter-git exec
+
+Exec command `"git diff --no-color origin/master | iconv -f EUCJP -t UTF8"`
 ```
 
 ## Development
