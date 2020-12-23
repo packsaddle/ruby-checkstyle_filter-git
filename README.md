@@ -1,7 +1,7 @@
 # CheckstyleFilter::Git
 
 [![Gem Version](http://img.shields.io/gem/v/checkstyle_filter-git.svg?style=flat)](http://badge.fury.io/rb/checkstyle_filter-git)
-[![Build Status](http://img.shields.io/travis/packsaddle/ruby-checkstyle_filter-git/master.svg?style=flat)](https://travis-ci.org/packsaddle/ruby-checkstyle_filter-git)
+[![Build Status](https://img.shields.io/circleci/build/github/packsaddle/ruby-checkstyle_filter-git?style=flat)](https://circleci.com/gh/packsaddle/ruby-checkstyle_filter-git)
 
 ## What is this?
 
