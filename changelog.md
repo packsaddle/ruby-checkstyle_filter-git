@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/packsaddle/ruby-checkstyle_filter-git/compare/v1.1.0...v1.2.0) (2021-04-13)
+
+
+### Features
+
+* **deps:** add rexml for ruby 3.0 compatibility ([0ec9d95](https://github.com/packsaddle/ruby-checkstyle_filter-git/commit/0ec9d95))
+
+
+
 # ChangeLog
 
 <a name="1.1.0"></a>
