@@ -8,6 +8,7 @@
 /spec/reports/
 /tmp/
 /node_modules/
+/package-lock.json
 
 # Ignore bundler binstubs
 /bundle_bin
