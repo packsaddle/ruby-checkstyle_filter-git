@@ -100,8 +100,8 @@ git diff -z --name-only origin/master.. \
      --format RuboCop::Formatter::CheckstyleFormatter \
  | checkstyle_filter-git diff origin/master.. \
  | saddler report \
-     --require github/pull-request-comment-formatter \
-     --format Github::PullRequestCommentFormatter
+     --require saddler/reporter/github \
+     --reporter Saddler::Reporter::Github::PullRequestReviewComment
 ```
 
 ## Installation
